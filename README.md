@@ -31,7 +31,7 @@ City life is bustling, and in the rush of daily routines, plant care often gets 
 3. **Automatic Reminders**: Get reminders for when to water, fertilize, or repot your plants.
 4. **Track Progress**: Monitor the health and growth of your plants with built-in tracking features.
 5. **Get Expert Help**: Connect with a community of plant lovers and experts for advice or troubleshooting.
-6. 
+   
 ---
 
 ## Contact
