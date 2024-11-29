@@ -34,12 +34,6 @@ City life is bustling, and in the rush of daily routines, plant care often gets 
 6. 
 ---
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## Contact
 
 If you have any questions feel free to reach out:
