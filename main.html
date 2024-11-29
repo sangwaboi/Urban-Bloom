@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Identifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f0f4f8;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        #imageUpload {
+            display: none;
+        }
+
+        .upload-label {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-label:hover {
+            background-color: #45a049;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 300px;
+            margin: 20px 0;
+            border-radius: 10px;
+            display: none;
+        }
+
+        #identifyButton {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            margin-top: 10px;
+        }
+
+        #resultContainer {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f8ff;
+            border-radius: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plant Identifier</h1>
+        
+        <input type="file" id="imageUpload" accept="image/*">
+        <label for="imageUpload" class="upload-label">
+            Upload Plant Image
+        </label>
+
+        <img id="imagePreview" src="#" alt="Image Preview">
+
+        <button id="identifyButton">Identify Plant</button>
+
+        <div id="resultContainer">
+            <h2 id="plantName">Plant Name</h2>
+            <p id="scientificName">Scientific Name</p>
+            <p id="description">Plant Description</p>
+            <p id="confidence">Confidence: 0%</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const identifyButton = document.getElementById('identifyButton');
+        const resultContainer = document.getElementById('resultContainer');
+        const plantName = document.getElementById('plantName');
+        const scientificName = document.getElementById('scientificName');
+        const description = document.getElementById('description');
+        const confidence = document.getElementById('confidence');
+
+        // Image Upload Handler
+        imageUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    identifyButton.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Plant Identification Mock Function
+        identifyButton.addEventListener('click', function() {
+            // Simulated plant identification
+            resultContainer.style.display = 'block';
+            
+            plantName.textContent = 'Rose';
+            scientificName.textContent = 'Rosa sp.';
+            description.textContent = 'A beautiful flowering plant known for its vibrant colors and distinctive fragrance. Roses are popular in gardens, floral arrangements, and symbolize love and beauty in many cultures.';
+            confidence.textContent = 'Confidence: 85%';
+        });
+    </script>
+</body>
+</html>
