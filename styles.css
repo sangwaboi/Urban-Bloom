@@ -1,0 +1,18 @@
+.chat-one-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    background: #ffe5b4;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-one-container .chat-header {
+    background: #ffa500;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
