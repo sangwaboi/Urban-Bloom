@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Garden Profile</title>
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --light-green: #e8f5e9;
+            --dark-green: #27ae60;
+            --background-color: #f0f4f0;
+            --text-color: #2c3e50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.2);
+            overflow: hidden;
+        }
+
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #add-plant-modal {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-form input, 
+        .modal-form select {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .modal-btn-save {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .modal-btn-cancel {
+            background-color: #f44336;
+            color: white;
+        }
+
+        
+        .profile-header {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+
+        .profile-header-info {
+            text-align: left;
+        }
+
+        .garden-stats {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--light-green);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .planted-plants {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .plant-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .plant-card .delete-plant {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #f44336;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .plant-icon {
+            font-size: 3em;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+        }
+
+        .add-plant-btn {
+            display: block;
+            width: 100%;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-plant-btn:hover {
+            background-color: var(--dark-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img id="profile-avatar" src="/api/placeholder/100/100" alt="Profile Avatar" class="profile-avatar">
+            <div class="profile-header-info">
+                <h1 id="profile-name">GreenThumb Sarah</h1>
+                <p id="profile-bio">Community Gardener</p>
+                <button onclick="editProfile()">Edit Profile</button>
+            </div>
+        </div>
+
+        <div class="garden-stats">
+            <div class="stat-item">
+                <div id="plants-count" class="stat-number">7</div>
+                <div>Plants</div>
+            </div>
+        </div>
+
+        <div id="planted-plants" class="planted-plants"></div>
+
+        <button onclick="openAddPlantModal()" class="add-plant-btn">Add New Plant</button>
+    </div>
+
+    <div id="profile-edit-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; display:flex; justify-content:center; align-items:center;">
+        <div style="background:white; padding:20px; border-radius:10px; width:300px;">
+            <h2>Edit Profile</h2>
+            <input type="text" id="edit-name" placeholder="Name">
+            <textarea id="edit-bio" placeholder="Bio"></textarea>
+            <input type="file" id="edit-avatar" accept="image/*">
+            <div>
+                <button onclick="saveProfile()">Save</button>
+                <button onclick="closeProfileEdit()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modal-overlay">
+        <div id="add-plant-modal">
+            <h2>Add New Plant</h2>
+            <form class="modal-form">
+                <select id="plant-type">
+                    <option value="">Select Plant Type</option>
+                    <option value="🌻">Sunflower</option>
+                    <option value="🌶️">Chili Pepper</option>
+                    <option value="🥬">Kale</option>
+                    <option value="🌹">Rose</option>
+                    <option value="🍅">Tomato</option>
+                    <option value="🥒">Cucumber</option>
+                </select>
+                <input type="text" id="plant-name" placeholder="Plant Nickname">
+                <input type="date" id="planting-date">
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn modal-btn-save" onclick="addPlant()">Add Plant</button>
+                    <button type="button" class="modal-btn modal-btn-cancel" onclick="closeAddPlantModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+       
+        let plants = JSON.parse(localStorage.getItem('gardenPlants')) || [];
+
+      
+        function renderPlants() {
+            const plantsContainer = document.getElementById('planted-plants');
+            plantsContainer.innerHTML = '';
+            
+            plants.forEach((plant, index) => {
+                const plantCard = document.createElement('div');
+                plantCard.classList.add('plant-card');
+                plantCard.innerHTML = `
+                    <button class="delete-plant" onclick="deletePlant(${index})">×</button>
+                    <div class="plant-icon">${plant.icon}</div>
+                    <h3>${plant.name}</h3>
+                    <p>Type: ${plant.type}</p>
+                    <p>Planted: ${plant.date}</p>
+                    <button class="add-plant-btn" onclick="openPlantDetails(${index})">Care Log</button>
+                `;
+                plantsContainer.appendChild(plantCard);
+            });
+
+           
+            document.getElementById('plants-count').textContent = plants.length;
+        }
+
+        
+        function addPlant() {
+            const type = document.getElementById('plant-type');
+            const name = document.getElementById('plant-name');
+            const date = document.getElementById('planting-date');
+
+            if (!type.value || !name.value || !date.value) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            plants.push({
+                icon: type.options[type.selectedIndex].value,
+                type: type.options[type.selectedIndex].text,
+                name: name.value,
+                date: date.value
+            });
+
+            localStorage.setItem('gardenPlants', JSON.stringify(plants));
+            renderPlants();
+            closeAddPlantModal();
+        }
+
+       
+        function deletePlant(index) {
+            plants.splice(index, 1);
+            localStorage.setItem('gardenPlants', JSON.stringify(plants));
+            renderPlants();
+        }
+
+    
+        function openAddPlantModal() {
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function closeAddPlantModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+
+        function editProfile() {
+            const editModal = document.getElementById('profile-edit-modal');
+            const currentName = document.getElementById('profile-name').textContent;
+            const currentBio = document.getElementById('profile-bio').textContent;
+
+            document.getElementById('edit-name').value = currentName;
+            document.getElementById('edit-bio').value = currentBio;
+            editModal.style.display = 'flex';
+        }
+
+        function saveProfile() {
+            const newName = document.getElementById('edit-name').value;
+            const newBio = document.getElementById('edit-bio').value;
+            const avatarFile = document.getElementById('edit-avatar').files[0];
+
+            if (newName) {
+                document.getElementById('profile-name').textContent = newName;
+            }
+
+            if (newBio) {
+                document.getElementById('profile-bio').textContent = newBio;
+            }
+
+            if (avatarFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-avatar').src = e.target.result;
+                }
+                reader.readAsDataURL(avatarFile);
+            }
+
+            closeProfileEdit();
+        }
+
+        function closeProfileEdit() {
+            const editModal = document.getElementById('profile-edit-modal');
+            editModal.style.display = 'none';
+        }
+
+        // Plant Details (placeholder)
+        function openPlantDetails(index) {
+            alert(`Detailed care log for ${plants[index].name}`);
+        }
+
+        // Initialize
+        renderPlants();
+    </script>
+</body>
+</html>
