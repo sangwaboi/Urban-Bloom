@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+        }
+        header {
+            background-color: #6FDD72;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        header nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        header nav a:hover {
+            text-decoration: underline;
+        }
+      
+        .store-section {
+            padding: 40px;
+            text-align: center;
+        }
+        .store-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .store-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+        .product {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4facfe;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #00f2fe;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="community.html">Community</a>
+            <a href="store.html">Store</a>
+            <a href="profile.html">Profile</a>
+        </nav>
+    </header>
+
+    <section class="store-section">
+        <div class="store-container">
+            <h1>Store</h1>
+
+            <div class="store-products">
+                <div class="product">
+                    <img src="https://th.bing.com/th/id/OIP.YIVXucZZAOr4yWw94rTuLQHaHa?rs=1&pid=ImgDetMain" alt="Plant Pot">
+                    <h4>Plant Pot</h4>
+                    <p>$15.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/04/05/19/pp-soil-rf-gettyc.jpg" alt="Plant Soil">
+                    <h4>Plant Soil</h4>
+                    <p>$8.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://i5.walmartimages.com/asr/d52679e9-d9f9-472d-a646-fe1bef8054c8.3eb5b3d1d84272db66dae65f9e8489b6.jpeg" alt="Watering Can">
+                    <h4>Watering Can</h4>
+                    <p>$12.49</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://i5.walmartimages.com/asr/6cfb89ca-455a-4df2-afb4-de5d4436dbe8.fc807f6bd599b926594a61b04e1bf284.jpeg" alt="Plant Fertilizer">
+                    <h4>Plant Fertilizer</h4>
+                    <p>$10.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://images.app.goo.gl/1WctZjgizTdRA8F4https://images.app.goo.gl/uqirv3Ev73BcpuBB7" alt="Plant Light">
+                    <h4>Plant Light</h4>
+                    <p>$22.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://ae01.alicdn.com/kf/HTB1Y0mwXzzuK1RjSsppq6xz0XXaS/Plant-flower-watering-can-pressure-portable-sprayer-garden-spray-bottle-kettle-pressure-sprayer-gardening-tool-spray.jpg" alt="Plant Sprayer">
+                    <h4>Plant Sprayer</h4>
+                    <p>$7.49</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://assets.leevalley.com/Size4/10109/111609-womens-garden-gloves-u-1072.jpg" alt="Garden Gloves">
+                    <h4>Garden Gloves</h4>
+                    <p>$5.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://th.bing.com/th/id/OIP.Mod2_p666LXhydkTEutfcQHaHa?rs=1&pid=ImgDetMain" alt="Garden Tools Set">
+                    <h4>Garden Tools Set</h4>
+                    <p>$29.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://i5.walmartimages.com/asr/20fdaf05-352a-4a93-9f89-f33d616a9d7a.2a066c024a8f68be45b5109aaf1c17df.jpeg" alt="Plant Support Stakes">
+                    <h4>Plant Support Stakes</h4>
+                    <p>$11.49</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://th.bing.com/th/id/OIP.egNaBQcww8yPB3RZ-BZXNQAAAA?rs=1&pid=ImgDetMain" alt="Plant Watering System">
+                    <h4>Plant Watering System</h4>
+                    <p>$19.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p style="text-align: center; padding: 20px; background-color: #6FDD72; color: white;">&copy; 2024 PlantFinder. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
